@@ -19,7 +19,7 @@ Ce projet est une application combinant un chatbot basé sur OpenAI GPT et un mo
 ## **Installation**
 1. Clonez ce dépôt :
    ```bash
-   git clone https://github.com/mon-projet.git
+   git clone https://github.com/Joe-azar/TP3.git
    cd mon-projet
    ```
 
