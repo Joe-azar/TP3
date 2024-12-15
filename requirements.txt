@@ -6,3 +6,4 @@ watchdog
 pytest
 tkinter
 requests
+openai
