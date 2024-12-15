@@ -1,6 +1,5 @@
 ### **README.md**
 
-```markdown
 # Chatbot et Recherche avec FastAPI et Tkinter
 
 Ce projet est une application combinant un chatbot basé sur OpenAI GPT et un moteur de recherche de documents, le tout intégré dans une interface graphique (Tkinter).
