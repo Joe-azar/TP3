@@ -1,7 +1,3 @@
-Voici le **README.md** mis à jour pour refléter que votre application est lancée avec **`.\run.ps1`** :
-
----
-
 ### **README.md**
 
 ```markdown
