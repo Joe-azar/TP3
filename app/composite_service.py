@@ -61,6 +61,9 @@ def batch_receive(request: BatchRequest):
 
 @app.post("/search_documents", response_model=SearchResponse)
 def search_documents(request: SearchRequest):
+    """
+    Recherche les documents avec un score de similarité supérieur à 0.2.
+    """
     # Charger les embeddings
     documents = load_embeddings()
     if not documents:
@@ -77,15 +80,21 @@ def search_documents(request: SearchRequest):
     results = []
     for idx, doc in enumerate(documents):
         similarity = cosine_similarity(query_embedding, np.array(doc["embedding"]))
-        results.append({
-            "id": idx + 1,
-            "text": doc["text"],
-            "similarity_score": similarity
-        })
+        if similarity > 0.2:  # Filtrer les documents avec un score > 0.2
+            results.append({
+                "id": idx + 1,
+                "text": doc["text"],
+                "similarity_score": similarity
+            })
 
-    # Trier et retourner les résultats
+    # Trier les résultats par similarité décroissante
     results = sorted(results, key=lambda x: x["similarity_score"], reverse=True)
-    return {"relevant_documents": results[:5]}
+
+    if not results:
+        return {"relevant_documents": []}  # Si aucun document pertinent n'est trouvé
+
+    return {"relevant_documents": results}
+
 def generate_response_with_gpt(question, relevant_documents):
     """
     Utilise OpenAI GPT pour générer une réponse basée sur la question et les documents pertinents.
@@ -102,7 +111,7 @@ def generate_response_with_gpt(question, relevant_documents):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=150,  # Limitez la réponse à une longueur raisonnable
+            max_tokens=200,  # Limitez la réponse à une longueur raisonnable
             temperature=0.5,  # Contrôle de la créativité
         )
         return response['choices'][0]['message']['content']
