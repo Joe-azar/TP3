@@ -111,7 +111,7 @@ def generate_response_with_gpt(question, relevant_documents):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,  # Limitez la réponse à une longueur raisonnable
+            max_tokens=150,  # Limitez la réponse à une longueur raisonnable
             temperature=0.5,  # Contrôle de la créativité
         )
         return response['choices'][0]['message']['content']

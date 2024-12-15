@@ -55,7 +55,7 @@ def ask_chatbot():
         if response.status_code == 200:
             answer = response.json()["response"]
             chatbot_response_text.delete(1.0, tk.END)
-            chatbot_response_text.insert(tk.END, f"Question : {query}\nRéponse : {answer}")
+            chatbot_response_text.insert(tk.END, f"{answer}\n")
         else:
             messagebox.showerror("Erreur", f"Erreur API : {response.json()['detail']}")
     except Exception as e:
